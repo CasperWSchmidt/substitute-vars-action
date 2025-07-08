@@ -1,0 +1,26 @@
+name: "Placeholder Substitution"
+description: "Replaces placeholders like $(VAR) or #{VAR} with environment variables"
+inputs:
+  files:
+    required: true
+    description: "Newline-separated list of files"
+  prefix:
+    required: false
+    default: "#{"
+    description: "Prefix for variable pattern"
+  suffix:
+    required: false
+    default: "}"
+    description: "Suffix for variable pattern"
+runs:
+  using: "composite"
+  steps:
+    - shell: pwsh
+      run: |
+        & "${{ github.action_path }}/substitute-vars.ps1" `
+          -Files ${{ inputs.files }}.Split("`n") `
+          -Prefix "${{ inputs.prefix }}" `
+          -Suffix "${{ inputs.suffix }}"
+branding:
+  icon: "refresh-cw"
+  color: "blue"
