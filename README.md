@@ -1,16 +1,24 @@
 # 🔤 Placeholder Substitution Action
 
-Replaces text-based variable placeholders in files using environment variables.  
-Supports multiple files and customizable patterns like `$(VAR)`, `${VAR}`, `#{VAR}`, or `<<VAR>>`.
+This GitHub Action replaces placeholder variables in text-based config files using environment variables.
+
+It supports patterns like:
+- `$(VAR)`
+- `${VAR}`
+- `#{VAR}`
+- `<<VAR>>`
 
 ---
 
 ## ✅ Features
 
-- Replace placeholder variables with values from environment variables
-- Works on Windows, Linux, and macOS GitHub runners
-- Fully customizable prefix/suffix for placeholder format
-- UTF-8 encoding (cross-platform safe)
+- 🔁 Replaces variable placeholders with values from environment variables
+- ✨ Customizable prefix and suffix (`${VAR}`, `$(VAR)`, etc.)
+- ✨ Supports **glob patterns** like `**/*.asa`
+- 🚫 Automatically deduplicates matched files
+- 🛡️ Gracefully fails if no files match
+- 🧾 Works with `.config`, `.asa`, `.env`, `.json`, etc.
+- ⚙️ Fully cross-platform (Windows, Linux, macOS)
 
 ---
 
@@ -39,8 +47,8 @@ Supports multiple files and customizable patterns like `$(VAR)`, `${VAR}`, `#{VA
   uses: CasperWSchmidt/substitute-vars-action@v1
   with:
     files: |
-      global.asax
-      settings.config
+      deploy/global.asa
+      deploy/**/*.config
     prefix: '${'
     suffix: '}'
 ```
