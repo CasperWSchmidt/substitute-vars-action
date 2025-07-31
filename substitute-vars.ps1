@@ -1,10 +1,18 @@
 param (
-  [string[]]$Files,
+  [string]$FilesList,
   [string]$Prefix = '#{',
   [string]$Suffix = '}'
 )
 
 Write-Host "🔄 Starting variable substitution with pattern: $Prefix<VAR>$Suffix"
+
+$files = @()
+$inputFiles = @($FilesList -split "`n")
+foreach ($file in $inputFiles) {
+	if ($file.Trim()) {
+		$files += $file.Trim()
+	}
+}
 
 $envVars = [System.Environment]::GetEnvironmentVariables()
 
@@ -14,7 +22,7 @@ Write-Host "🔄 Resolving file paths..."
 # HashSet to store full paths (avoids duplicates)
 $resolved = [System.Collections.Generic.HashSet[string]]::new()
 
-foreach ($pattern in $Files) {
+foreach ($pattern in $files) {
   $matches = Get-ChildItem -Path $pattern -File -Recurse -ErrorAction SilentlyContinue | ForEach-Object { $_.FullName }
   if (-not $matches) {
     Write-Warning "⚠️ No matches found for pattern: $pattern"

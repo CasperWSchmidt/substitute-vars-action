@@ -18,7 +18,7 @@ runs:
     - shell: pwsh
       run: |
         & "${{ github.action_path }}/substitute-vars.ps1" `
-          -Files ${{ inputs.files }}.Split("`n") `
+          -FilesList ${{ inputs.files }} `
           -Prefix "${{ inputs.prefix }}" `
           -Suffix "${{ inputs.suffix }}"
 branding:
