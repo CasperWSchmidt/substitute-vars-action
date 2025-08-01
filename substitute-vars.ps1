@@ -29,6 +29,7 @@ foreach ($pattern in $files) {
   }
 
   foreach ($file in $matches) {
+	Write-Host "Found: $file"
     $resolved.Add($file) | Out-Null
   }
 }
@@ -51,8 +52,8 @@ foreach ($file in $resolved) {
       $name = [Regex]::Escape($envVar)
       $value = $envVars[$envVar]
 
-      $pattern = [Regex]::Escape($Prefix) + $name + [Regex]::Escape($Suffix)
-      $content = [Regex]::Replace($content, $pattern, [Regex]::Escape($value))
+      $pattern = $Prefix + $name + $Suffix
+      $content = [Regex]::Replace($content, $pattern, $value, [System.Text.RegularExpressions.RegexOptions]::IgnoreCase)
     }
 
     Set-Content -Path $file -Value $content -Encoding UTF8NoBOM
